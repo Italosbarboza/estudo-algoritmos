@@ -28,7 +28,7 @@ def findNextConnectedComponent(checkVerticesPath):
         if(checkVerticesPath[i] == -1):
             return i + 1
 
-def depthSearch(listaDeAdjacencias):
+def widthSearch(listaDeAdjacencias):
     checkVerticesPath = []
     before = []
     next = []
@@ -82,6 +82,6 @@ while True:
 checkVerticesPath = []
 
 adjacencyList = transformListAdjacency(data, n)
-findDeep = depthSearch(adjacencyList)
-for i in range(len(findDeep)):
-    print(*findDeep[i])
+graphWidth = widthSearch(adjacencyList)
+for i in range(len(graphWidth)):
+    print(*graphWidth[i])
