@@ -5,6 +5,8 @@ def transformListAdjacency(data, n):
         for j in range(len(data)):
             if(data[j][0] == i+1):
                 arrayTemp.append(data[j][1])
+            elif(data[j][1] == i+1):
+                arrayTemp.append(data[j][0])
         listaDeAdjacencias.append(arrayTemp)
     return listaDeAdjacencias
 
@@ -63,12 +65,25 @@ def buscaEmProfundidade(listaDeAdjacencias):
 
 # Observar qual o erro para essa instância
 # Entrada
-data = [[2,9], [3, 8], [5, 7], [6,9], [8,10]]
-n = 10
+data = []
+n = 0
+i = 0
+
+while True:
+    try:
+        line = input()
+        i = i + 1
+    except EOFError:
+        break
+    if(i==3):
+        n = int(line.split('=')[1])
+    if(i>4):
+        graph = [int(item) for item in line.split()]
+        data.append(graph)
 
 checkVerticesPath = []
 
 listaDeAdjacencias = transformListAdjacency(data, n)
 buscaProfundidade = buscaEmProfundidade(listaDeAdjacencias)
-print(buscaProfundidade)
-
+for i in range(len(buscaProfundidade)):
+    print(*buscaProfundidade[i])

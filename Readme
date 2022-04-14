@@ -1,0 +1,8 @@
+### Grafos
+
+Repositório para estudo de Grafos.
+
+Implementação 01: - Busca em grafos para Componentes Conexas. Para o exemplo foi utilizado o algorítmo de busca 
+em largura modificado.
+
+Exemplo de como executar: python3 main.py < 0_grafo.dl
