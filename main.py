@@ -1,5 +1,5 @@
 def transformListAdjacency(data, n):
-    listaDeAdjacencias = []
+    adjacencyList = []
     for i in range(n):
         arrayTemp = []
         for j in range(len(data)):
@@ -7,28 +7,28 @@ def transformListAdjacency(data, n):
                 arrayTemp.append(data[j][1])
             elif(data[j][1] == i+1):
                 arrayTemp.append(data[j][0])
-        listaDeAdjacencias.append(arrayTemp)
-    return listaDeAdjacencias
+        adjacencyList.append(arrayTemp)
+    return adjacencyList
 
-def componenteConexa(checkVerticesPath, interacao):
+def connectedComponent(checkVerticesPath, iteration):
     component = []
     for check in range(len(checkVerticesPath)):
-        if(checkVerticesPath[check] == interacao):
+        if(checkVerticesPath[check] == iteration):
             component.append(check + 1)
     return component
 
-def verificaSeExisteOutraComponent(checkVerticesPath):
+def verifyNextConnectedComponent(checkVerticesPath):
     for i in range(len(checkVerticesPath)):
         if(checkVerticesPath[i] == -1):
             return True
     return False
 
-def findProximaComponenteConexa(checkVerticesPath):
+def findNextConnectedComponent(checkVerticesPath):
     for i in range(len(checkVerticesPath)):
         if(checkVerticesPath[i] == -1):
             return i + 1
 
-def buscaEmProfundidade(listaDeAdjacencias):
+def depthSearch(listaDeAdjacencias):
     checkVerticesPath = []
     before = []
     next = []
@@ -39,32 +39,30 @@ def buscaEmProfundidade(listaDeAdjacencias):
     origin = 1
     before.append(origin)
 
-    componentes = []
-    interacao = 1
+    component = []
+    iteration = 1
 
-    while(verificaSeExisteOutraComponent(checkVerticesPath)):
+    while(verifyNextConnectedComponent(checkVerticesPath)):
         while (len(before) != 0):
             itemRemove = before[0]
             before.remove(itemRemove)
-            checkVerticesPath[itemRemove - 1] = interacao
+            checkVerticesPath[itemRemove - 1] = iteration
             if(len(listaDeAdjacencias[itemRemove - 1]) > 0):
                 for i in range(len(listaDeAdjacencias[itemRemove - 1])):
                     vertice = listaDeAdjacencias[itemRemove - 1][i]
                     if(checkVerticesPath[vertice - 1] == -1):
                         next.append(vertice)
-                        checkVerticesPath[vertice - 1] = interacao
+                        checkVerticesPath[vertice - 1] = iteration
                 if (len(before) == 0):
                     temp = before
                     before = next
                     next = temp
-        componentes.append(componenteConexa(checkVerticesPath, interacao))
-        interacao += 1
-        before.append(findProximaComponenteConexa(checkVerticesPath))
-    return componentes
+        component.append(connectedComponent(checkVerticesPath, iteration))
+        iteration += 1
+        before.append(findNextConnectedComponent(checkVerticesPath))
+    return component
 
 
-# Observar qual o erro para essa instância
-# Entrada
 data = []
 n = 0
 i = 0
@@ -83,7 +81,7 @@ while True:
 
 checkVerticesPath = []
 
-listaDeAdjacencias = transformListAdjacency(data, n)
-buscaProfundidade = buscaEmProfundidade(listaDeAdjacencias)
-for i in range(len(buscaProfundidade)):
-    print(*buscaProfundidade[i])
+adjacencyList = transformListAdjacency(data, n)
+findDeep = depthSearch(adjacencyList)
+for i in range(len(findDeep)):
+    print(*findDeep[i])
